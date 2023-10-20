@@ -12,6 +12,9 @@ const bookSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// COMPOUND INDEX ON TITLE & AUTHOR TO ENFORCE UNIQUENESS
+bookSchema.index({title: 1, author:1}, {unique: true})
+
 const Book = new mongoose.model("Book", bookSchema)
 
 module.exports = Book;

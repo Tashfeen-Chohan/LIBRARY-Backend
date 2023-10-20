@@ -75,7 +75,7 @@ router.put("/:id", async (req, res) => {
     // let book = await Book.findOne({title: req.body.title, author: req.body.author})
     // if (book) return res.status(400).send({message: "Book with same Author name aleady exists!"})
 
-    book = await Book.findByIdAndUpdate(req.params.id, req.body, {new: true})
+    let book = await Book.findByIdAndUpdate(req.params.id, req.body, {new: true})
     if (!book) return res.status(404).send({message: "Book not found!"})
 
     
