@@ -6,11 +6,12 @@ const cors = require("cors")
 const books = require("./routes/books")
 
 // DOTENV CONFIG
-dotenv.config({path: "./env"})
+dotenv.config({path: "./config.env"})
+const DATABASE = process.env.MONGODB_URL
 
 // DATABASE CONNECTION
 mongoose
-  .connect("mongodb://127.0.0.1/Library")
+  .connect(DATABASE)
   .then(() => console.log("Database connected successfully"))
   .catch(err => console.log("Could not connect to the database", err))
 
