@@ -72,9 +72,7 @@ router.get("/", async (req, res) => {
       else if (sort === "price desc"){
         sortQuery = {price: -1}
       }
-    } else {
-      // sortQuery = {title: 1}
-    }
+    } 
 
     const books = await Book.find(searchQuery).sort(sortQuery)
     res.status(200).send({books: books})
