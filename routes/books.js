@@ -32,7 +32,11 @@ router.post("/", async (req, res) => {
 // READING BOOKS
 router.get("/", async (req, res) => {
   try {
-    const books = await Book.find()
+    const search = req.query.search || ""
+    const query = {
+      title: {$regex: search, $options: "i"}
+    }
+    const books = await Book.find(query)
     res.status(200).send({books: books})
 
   } catch (error) {
@@ -109,8 +113,8 @@ router.delete("/:id", async (req, res) => {
 // FUNCTION TO VALIDATE BOOK
 function validateBook(book){
   const schema = Joi.object({
-    title: Joi.string().required().min(2),
-    author: Joi.string().required().min(2),
+    title: Joi.string().required().trim().min(2),
+    author: Joi.string().required().trim().min(2),
     publisher: Joi.string().required().min(2),
     category: Joi.string().required().min(2),
     copies: Joi.number().required().min(5).max(1000),
