@@ -66,6 +66,12 @@ router.get("/", async (req, res) => {
       else if (sort === "date desc"){
         sortQuery = {createdAt: -1}
       }
+      else if (sort === "price asc"){
+        sortQuery = {price: 1}
+      }
+      else if (sort === "price desc"){
+        sortQuery = {price: -1}
+      }
     } else {
       // sortQuery = {title: 1}
     }
