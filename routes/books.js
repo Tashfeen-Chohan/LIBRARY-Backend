@@ -34,7 +34,12 @@ router.get("/", async (req, res) => {
   try {
     const search = req.query.search || ""
     const query = {
-      title: {$regex: search, $options: "i"}
+      $or: [
+        {title: {$regex: search, $options: "i"}},
+        {author: {$regex: search, $options: "i"}},
+        {publisher: {$regex: search, $options: "i"}},
+        {category: {$regex: search, $options: "i"}},
+      ]
     }
     const books = await Book.find(query)
     res.status(200).send({books: books})
