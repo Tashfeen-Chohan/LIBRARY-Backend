@@ -33,7 +33,10 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const search = req.query.search || ""
-    const query = {
+    let sort = req.query.sort || ""
+    
+    // SEARCHING
+    const searchQuery = {
       $or: [
         {title: {$regex: search, $options: "i"}},
         {author: {$regex: search, $options: "i"}},
@@ -41,7 +44,33 @@ router.get("/", async (req, res) => {
         {category: {$regex: search, $options: "i"}},
       ]
     }
-    const books = await Book.find(query)
+
+    // SORTING
+    let sortQuery = {}
+    if (sort){
+      if (sort === "title"){
+        sortQuery = {title: 1}
+      }
+      else if (sort === "author"){
+        sortQuery = {author: 1}
+      }
+      else if (sort === "publisher"){
+        sortQuery = {publisher: 1}
+      }
+      else if (sort === "category"){
+        sortQuery = {category: 1}
+      }
+      else if(sort === "date asc"){
+        sortQuery = {createdAt: 1}
+      }
+      else if (sort === "date desc"){
+        sortQuery = {createdAt: -1}
+      }
+    } else {
+      // sortQuery = {title: 1}
+    }
+
+    const books = await Book.find(searchQuery).sort(sortQuery)
     res.status(200).send({books: books})
 
   } catch (error) {
