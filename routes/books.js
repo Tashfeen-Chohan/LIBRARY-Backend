@@ -7,13 +7,18 @@ const mongoose = require("mongoose");
 
 // CREATE BOOK
 router.post("/", async (req, res) => {
+  const {title, author} = req.body
   // JOI VALIDATION
   const { error } = validateBook(req.body);
   if (error) return res.status(400).send({ message: error.details[0].message });
 
   try {
+    // CHECKING UNIQUENESS
+    let book = await Book.find({title, author})
+    if (book) return res.status(400).send({message: "Book already exists!"})
+
     // CREATING A NEW BOOK
-    let book = new Book(req.body);
+    book = new Book(req.body);
     await book.save();
     res.status(200).send({ message: "Book added successfully!" });
   } catch (error) {
@@ -117,6 +122,7 @@ router.get("/:id", async (req, res) => {
 
 // UPDATING BOOK
 router.put("/:id", async (req, res) => {
+  const {title, author} = req.body
   // CHECKING BOOK ID
   if (!mongoose.Types.ObjectId.isValid(req.params.id))
     return res.status(400).send({ message: "Invlaid Book Id!" });
@@ -126,6 +132,7 @@ router.put("/:id", async (req, res) => {
   if (error) return res.status(400).send({ message: error.details[0].message });
 
   try {
+    
     let book = await Book.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
