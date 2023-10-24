@@ -84,7 +84,7 @@ router.get("/", async (req, res) => {
       .limit(limit);
 
     let nextPage = page < totalPages ? page + 1 : null;
-    let previousPage = page > 1 ? page - 1 : null;
+    let prevPage = page > 1 ? page - 1 : null;
 
     res
       .status(200)
@@ -95,7 +95,7 @@ router.get("/", async (req, res) => {
         totalPages,
         books,
         nextPage,
-        previousPage,
+        prevPage,
       });
   } catch (error) {
     res.status(500).send({ message: "Could not get all books!" });
