@@ -7,18 +7,18 @@ const mongoose = require("mongoose");
 
 // CREATE BOOK
 router.post("/", async (req, res) => {
-  const {title, author} = req.body
+  // const {title, author} = req.body
   // JOI VALIDATION
   const { error } = validateBook(req.body);
   if (error) return res.status(400).send({ message: error.details[0].message });
 
   try {
     // CHECKING UNIQUENESS
-    let book = await Book.find({title, author})
-    if (book) return res.status(400).send({message: "Book already exists!"})
+    // const b = await Book.find({title: req.body.title, author: req.body.author})
+    // if (b) return res.status(400).send({message: "Book already exists!"})
 
     // CREATING A NEW BOOK
-    book = new Book(req.body);
+    const book = new Book(req.body);
     await book.save();
     res.status(200).send({ message: "Book added successfully!" });
   } catch (error) {
