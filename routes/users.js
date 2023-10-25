@@ -1,7 +1,7 @@
 const router = require("express").Router()
 const {User, validateUser, validateUser} = require("../models/User")
 
-// REGISTERATION
+// USER REGISTERATION
 router.post("/", async(req, res) => {
   const {error} = validateUser(req.body)
   if (error) return res.status(400).send({message: error.details[0].message})
