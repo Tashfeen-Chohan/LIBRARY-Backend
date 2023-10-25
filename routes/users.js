@@ -1,5 +1,5 @@
 const router = require("express").Router()
-const {User, validateUser, validateUser} = require("../models/User")
+const {User, validateUser} = require("../models/User")
 
 // USER REGISTERATION
 router.post("/", async(req, res) => {

@@ -4,6 +4,8 @@ const mongoose = require("mongoose")
 const dotenv = require("dotenv")
 const cors = require("cors")
 const books = require("./routes/books")
+const users = require("./routes/users")
+const userAuth = require("./routes/userAuth")
 
 // DOTENV CONFIG
 dotenv.config({path: "./config.env"})
@@ -19,6 +21,8 @@ mongoose
 app.use(express.json())
 app.use(cors())
 app.use("/api/book", books)
+app.use("/api/users", users)
+app.use("api/auth", userAuth)
 
 
 // PORT ENVIRONMENT
