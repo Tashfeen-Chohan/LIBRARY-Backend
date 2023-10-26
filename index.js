@@ -22,10 +22,10 @@ app.use(express.json())
 app.use(cors())
 app.use("/api/book", books)
 app.use("/api/users", users)
-app.use("api/auth", userAuth)
+app.use("/api/auth", userAuth)
 
 
 // PORT ENVIRONMENT
-const PORT = process.env.PORT || 3000
+const PORT = 3000
 app.listen(PORT, () => console.log(`Server is listening on port ${PORT}`))
 

@@ -1,5 +1,6 @@
 const router = require("express").Router()
 const {User, validateUser} = require("../models/User")
+const bcrypt = require("bcrypt")
 
 // USER REGISTERATION
 router.post("/", async(req, res) => {

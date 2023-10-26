@@ -14,19 +14,13 @@ const userSchema = new mongoose.Schema(
 
 const User = mongoose.model("User", userSchema)
 
-// FUNCTION TO GENERATE AUTH TOKEN
-userSchema.methods.genAuthToken = function(){
-  const token = jwt.sign({_id: this._id}, process.env.JWTPRIVATEKEY, {expiresIn: "14d"})
-  return token
-}
-
 // JOI PASSWORD COMPLEXITY OPTIONS
 const complexityOptions = {
   min: 6,
   max: 25,
   lowerCase: 1,
   upperCase: 1,
-  numberic: 1
+  numeric: 1
 }
 // FUNCTION TO VALIDATE USER
 function validateUser(user){
@@ -38,4 +32,4 @@ function validateUser(user){
   return schema.validate(user)
 }
 
-module.exports = {User, validateUser}
+module.exports = {User, validateUser};
