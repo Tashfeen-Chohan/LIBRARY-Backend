@@ -20,7 +20,11 @@ mongoose
 
 // MIDDLEWARE FUNCTION
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+  origin: ["http://localhost:5173"],
+  methods: ["GET", "POST"],
+  credentials: true
+}))
 app.use(cookieParser())
 app.use("/api/book", books)
 app.use("/api/staff", staff)
