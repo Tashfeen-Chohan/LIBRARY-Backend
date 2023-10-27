@@ -1,18 +1,18 @@
 const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
 const Joi = require("joi")
 const passwordComplexity = require("joi-password-complexity")
 
-const userSchema = new mongoose.Schema(
+const staffSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    role: {type: String, default: "librarian"}
   },
   { timestamps: true }
 );
 
-const User = mongoose.model("User", userSchema)
+const Staff = mongoose.model("Staff", staffSchema)
 
 // JOI PASSWORD COMPLEXITY OPTIONS
 const complexityOptions = {
@@ -23,7 +23,7 @@ const complexityOptions = {
   numeric: 1
 }
 // FUNCTION TO VALIDATE USER
-function validateUser(user){
+function validateStaff(user){
   const schema = Joi.object({
     name: Joi.string().required().min(2).label("Name"),
     email: Joi.string().email().required().label("Email"),
@@ -32,4 +32,4 @@ function validateUser(user){
   return schema.validate(user)
 }
 
-module.exports = {User, validateUser};
+module.exports = {Staff, validateStaff};

@@ -1,5 +1,5 @@
 const router = require("express").Router()
-const {User, validateUser} = require("../models/User")
+const {User, validateUser} = require("../models/Staff")
 const bcrypt = require("bcrypt")
 
 // USER REGISTERATION
