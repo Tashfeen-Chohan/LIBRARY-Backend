@@ -5,7 +5,7 @@ const dotenv = require("dotenv")
 const cors = require("cors")
 const cookieParser = require("cookie-parser")
 const books = require("./routes/books")
-const users = require("./routes/users")
+const staff = require("./routes/staff")
 const userAuth = require("./routes/userAuth")
 
 // DOTENV CONFIG
@@ -23,7 +23,7 @@ app.use(express.json())
 app.use(cors())
 app.use(cookieParser())
 app.use("/api/book", books)
-app.use("/api/users", users)
+app.use("/api/staff", staff)
 app.use("/api/auth", userAuth)
 
 
