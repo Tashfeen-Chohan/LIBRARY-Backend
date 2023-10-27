@@ -22,14 +22,14 @@ const complexityOptions = {
   upperCase: 1,
   numeric: 1
 }
-// FUNCTION TO VALIDATE USER
-function validateStaff(user){
+// FUNCTION TO VALIDATE STAFF
+function validateStaff(staff){
   const schema = Joi.object({
     name: Joi.string().required().min(2).label("Name"),
     email: Joi.string().email().required().label("Email"),
     password: passwordComplexity(complexityOptions).label("Password") 
   })
-  return schema.validate(user)
+  return schema.validate(staff)
 }
 
 module.exports = {Staff, validateStaff};
