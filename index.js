@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser")
 const books = require("./routes/books")
 const staff = require("./routes/staff")
 const staffAuth = require("./routes/staffAuth")
+const adminDashboard = require("./routes/adminDashboard")
 
 // DOTENV CONFIG
 dotenv.config({path: "./config.env"})
@@ -29,6 +30,7 @@ app.use(cookieParser())
 app.use("/api/book", books)
 app.use("/api/staff", staff)
 app.use("/api/staffAuth", staffAuth)
+app.use("/adminDashboard", adminDashboard)
 
 
 // PORT ENVIRONMENT
