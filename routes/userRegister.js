@@ -17,7 +17,7 @@ router.post("/", async(req, res) => {
     user = new User({...req.body, password: hashPassword})
     await user.save()
 
-    res.status(200).send({message: "User registered successfully!"})
+    res.status(200).send({message: "User registered successfully!", success: true, user: user})
   } catch (error) {
     res.status(500).send({message: error.message})
     console.log(error.message)
