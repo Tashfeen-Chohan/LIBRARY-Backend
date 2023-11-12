@@ -13,9 +13,8 @@ router.post("/", async(req, res) => {
     if (!validPassword) return res.status(400).send({message: "Invalid Credentials!"})
 
     const token = jwt.sign({email: staff.email, role: staff.role}, process.env.JWTPRIVATEKEY, {expiresIn: "1d"})
-    // res.cookie("token", token)
-    // res.status(200).send({message: "Logged in successfully!", role: staff.role})
-    res.send({token})
+    res.cookie("token", token)
+    res.send({token: token, role: staff.role})
   
   } catch (error) {
     res.status(500).send({message: error.message})
