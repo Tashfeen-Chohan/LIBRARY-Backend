@@ -1,23 +1,23 @@
 const router = require("express").Router()
-const {Staff, validateStaff} = require("../models/Staff")
+const {User, validateUser} = require("../models/User")
 const bcrypt = require("bcrypt")
 
 // USER REGISTERATION
 router.post("/", async(req, res) => {
-  const {error} = validateStaff(req.body)
+  const {error} = validateUser(req.body)
   if (error) return res.status(400).send({message: error.details[0].message})
 
   try {
-    let staff = await Staff.findOne({email: req.body.email})
-    if (staff) return res.status(409).send({message: "Staff with given email already exists!"})
+    let user = await User.findOne({email: req.body.email})
+    if (user) return res.status(409).send({message: "User with given email already exists!"})
 
     const salt = await bcrypt.genSalt(10)
     const hashPassword = await bcrypt.hash(req.body.password, salt)
 
-    staff = new Staff({...req.body, password: hashPassword})
-    await staff.save()
+    user = new User({...req.body, password: hashPassword})
+    await user.save()
 
-    res.status(200).send({message: "Staff registered successfully!"})
+    res.status(200).send({message: "User registered successfully!"})
   } catch (error) {
     res.status(500).send({message: error.message})
     console.log(error.message)

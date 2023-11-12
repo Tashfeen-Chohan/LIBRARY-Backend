@@ -5,8 +5,9 @@ const dotenv = require("dotenv")
 const cors = require("cors")
 const cookieParser = require("cookie-parser")
 const books = require("./routes/books")
-const staff = require("./routes/staff")
-const staffAuth = require("./routes/staffAuth")
+const userRegister = require("./routes/userRegister")
+const userLogin = require("./routes/userLogin")
+const userLogout = require("./routes/userLogout")
 const adminDashboard = require("./routes/adminDashboard")
 
 // DOTENV CONFIG
@@ -23,14 +24,15 @@ mongoose
 app.use(express.json())
 app.use(cors({
   origin: ["http://localhost:5173"],
-  methods: ["GET", "POST"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }))
 app.use(cookieParser())
 app.use("/api/book", books)
-app.use("/api/staff", staff)
-app.use("/api/staffAuth", staffAuth)
-app.use("/adminDashboard", adminDashboard)
+app.use("/api/userRegister", userRegister)
+app.use("/api/userLogin", userLogin)
+app.use("/userLogout", userLogout)
+// app.use("/adminDashboard", adminDashboard)
 
 
 // PORT ENVIRONMENT

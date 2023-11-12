@@ -1,25 +1,27 @@
 const router = require("express").Router()
-const {Staff}  = require("../models/Staff")
+const {User}  = require("../models/User")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 
 // USER LOGIN
 router.post("/", async(req, res) => {
   try {
-    const staff = await Staff.findOne({email: req.body.email})
-    if (!staff) return res.status(400).send({message: "Invalid Credentials!"})
+    const user = await User.findOne({email: req.body.email})
+    if (!user) return res.status(400).send({message: "Invalid Credentials!"})
 
-    const validPassword = await bcrypt.compare(req.body.password, staff.password)
+    const validPassword = await bcrypt.compare(req.body.password, user.password)
     if (!validPassword) return res.status(400).send({message: "Invalid Credentials!"})
 
-    const token = jwt.sign({email: staff.email, role: staff.role}, process.env.JWTPRIVATEKEY, {expiresIn: "1d"})
+    const token = jwt.sign({email: user.email, role: user.role}, process.env.JWTPRIVATEKEY, {expiresIn: "1d"})
     res.cookie("token", token)
-    res.send({token: token, role: staff.role})
+    res.send({token: token, role: user.role})
   
   } catch (error) {
     res.status(500).send({message: error.message})
     console.log(error.message)
   }
 })
+
+
 
 module.exports = router;

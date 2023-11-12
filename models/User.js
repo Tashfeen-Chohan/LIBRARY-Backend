@@ -2,17 +2,17 @@ const mongoose = require("mongoose");
 const Joi = require("joi")
 const passwordComplexity = require("joi-password-complexity")
 
-const staffSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    role: {type: String, default: "visitor"}
+    role: {type: String, default: "patron"}
   },
   { timestamps: true }
 );
 
-const Staff = mongoose.model("Staff", staffSchema)
+const User = mongoose.model("User", userSchema)
 
 // JOI PASSWORD COMPLEXITY OPTIONS
 const complexityOptions = {
@@ -23,13 +23,13 @@ const complexityOptions = {
   numeric: 1
 }
 // FUNCTION TO VALIDATE STAFF
-function validateStaff(staff){
+function validateUser(user){
   const schema = Joi.object({
     name: Joi.string().required().min(2).label("Name"),
     email: Joi.string().email().required().label("Email"),
     password: passwordComplexity(complexityOptions).label("Password") 
   })
-  return schema.validate(staff)
+  return schema.validate(user)
 }
 
-module.exports = {Staff, validateStaff};
+module.exports = {User, validateUser};
