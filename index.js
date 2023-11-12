@@ -8,6 +8,7 @@ const books = require("./routes/books")
 const userRegister = require("./routes/userRegister")
 const userLogin = require("./routes/userLogin")
 const userLogout = require("./routes/userLogout")
+const home = require("./routes/home")
 const adminDashboard = require("./routes/adminDashboard")
 
 // DOTENV CONFIG
@@ -28,6 +29,7 @@ app.use(cors({
   credentials: true
 }))
 app.use(cookieParser())
+app.use("/", home)
 app.use("/api/book", books)
 app.use("/api/userRegister", userRegister)
 app.use("/api/userLogin", userLogin)
