@@ -1,20 +1,21 @@
 const jwt = require("jsonwebtoken")
-const User = require("../models/User")
+const dotenv = require("dotenv")
+dotenv.config({path: "../config.env"})
 
-async function userVerification(req, res){
+async function userVerification(req, res, next){
   try {
     const token = req.cookies.token
     if (!token) return res.status(401).send({message: "Access denied. No token provided!", status: false})
     
-    const data = await jwt.verify(token, process.env.JWTPRIVATEKEY);
-    const user = await User.findById(data.id);
+    const decoded = jwt.verify(token, process.env.JWTPRIVATEKEY);
+    if (!decoded) return res.status(401).send({message: "Access denied!", status: false})
 
-    if (!user) return res.status(401).send({message: "Access denied!", status: false})
-    res.status(400).send({message: "Access Granted!", status: true})
-
+    req.user = decoded;
+    res.status(200).send({message: "Access Granted!", status: true, user: req.user})
+    next()
   } catch (error) {
-    console.log(error)    
-    res.status(400).send({message: "Failed to authorize", status: false})
+    console.log(error.message)    
+    res.status(500).send({message: "Failed to verify user!", status: false})
   }
 }
 

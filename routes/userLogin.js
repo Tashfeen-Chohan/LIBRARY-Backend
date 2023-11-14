@@ -12,7 +12,7 @@ router.post("/", async(req, res) => {
     const validPassword = await bcrypt.compare(req.body.password, user.password)
     if (!validPassword) return res.status(400).send({message: "Invalid Credentials!"})
 
-    const token = jwt.sign({id: user._id}, process.env.JWTPRIVATEKEY, {expiresIn: "1d"})
+    const token = jwt.sign({id: user._id, role: user.role}, process.env.JWTPRIVATEKEY, {expiresIn: "1d"})
     res.cookie("token", token)
     res.send({message: "User logged in successfully!", success: true, user: user})
   
